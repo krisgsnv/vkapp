@@ -1,10 +1,20 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
+import { createRoot } from "react-dom/client";
+import { Provider } from "react-redux";
+import { AdaptivityProvider, ConfigProvider } from "@vkontakte/vkui";
+import { store } from "@/app/providers/store";
 import App from "./App.tsx";
-import "./index.css";
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
-    <React.StrictMode>
-        <App />
-    </React.StrictMode>
+import "@vkontakte/vkui/dist/vkui.css";
+
+const container = document.getElementById("root");
+const root = createRoot(container!);
+
+root.render(
+    <Provider store={store}>
+        <ConfigProvider appearance="light">
+            <AdaptivityProvider>
+                <App />
+            </AdaptivityProvider>
+        </ConfigProvider>
+    </Provider>
 );
