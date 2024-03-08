@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { groupsApi } from "@/shared/api";
+import { groupsApi } from "@/entities/Group/api";
+import { filterSlice } from "@/features/Filter";
 
 export const store = configureStore({
     reducer: {
-        [groupsApi.reducerPath]: groupsApi.reducer
+        [groupsApi.reducerPath]: groupsApi.reducer,
+        [filterSlice.name]: filterSlice.reducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(groupsApi.middleware)
 });
