@@ -1,6 +1,6 @@
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
-import { AdaptivityProvider, ConfigProvider } from "@vkontakte/vkui";
+import { AdaptivityProvider, AppRoot, ConfigProvider } from "@vkontakte/vkui";
 import { store } from "@/app/providers/store";
 import App from "./App.tsx";
 
@@ -13,7 +13,9 @@ root.render(
     <Provider store={store}>
         <ConfigProvider appearance="light">
             <AdaptivityProvider>
-                <App />
+                <AppRoot>
+                    <App />
+                </AppRoot>
             </AdaptivityProvider>
         </ConfigProvider>
     </Provider>

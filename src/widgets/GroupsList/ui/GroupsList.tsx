@@ -1,18 +1,18 @@
-import { Group as UIGroup } from "@vkontakte/vkui";
 import { Group } from "@/entities/Group";
-import { useGetAllGroupsQuery } from "@/shared/api";
+import { selectFilteredGroups } from "@/entities/Group/api";
+import { useAppSelector } from "@/shared/hooks/redux";
+import { filterSelector } from "@/features/Filter";
+import { isEmpty } from "@/shared/lib/array";
 
 export const GroupsList = () => {
-    const { data: groups, error, isLoading } = useGetAllGroupsQuery();
+    const filter = useAppSelector(filterSelector);
+    const groups = useAppSelector((state) => selectFilteredGroups(state, filter));
 
-    if (isLoading) return <p>Загрузка</p>;
-    else if (error) return <p>Ошибка</p>;
-    else if (groups)
-        return (
-            <UIGroup>
-                {groups.map((group) => {
-                    return <Group key={group.id} {...group} />;
-                })}
-            </UIGroup>
-        );
+    return isEmpty(groups) ? (
+        <p>Нет элементов, удовлетворяющих выбранным критериям</p>
+    ) : (
+        groups.map((group) => {
+            return <Group key={group.id} {...group} />;
+        })
+    );
 };
